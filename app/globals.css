@@ -8,6 +8,7 @@ html,
 body {
   overflow-x: hidden;
   background-color: #000925;
+  color: #eee;
 }
 
 main {
@@ -62,7 +63,7 @@ li {
 .container {
   max-width: 740px;
   width: 100%;
-  margin: auto;
+  margin: 4em auto;
   padding: 1rem;
 }
 
