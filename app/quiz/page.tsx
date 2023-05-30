@@ -18,7 +18,7 @@ const page = () => {
   });
 
   const { questions, totalQuestions } = quiz;
-  const { question, answers, correctAnswer } = questions[activeQuestion];
+  const { answers, correctAnswer } = questions[activeQuestion];
 
   const onAnswerSelected = (answer: string, idx: number) => {
     setChecked(true);
@@ -30,6 +30,30 @@ const page = () => {
       setSelectedAnswer(false);
       console.log('false');
     }
+  };
+
+  const nextQuestion = () => {
+    setSelectedAnswerIndex(null);
+    setResult((prev) =>
+      selectedAnswer
+        ? {
+            ...prev,
+            score: prev.score + 5,
+            correctAnswers: prev.correctAnswers + 1,
+          }
+        : {
+            ...prev,
+            wrongAnswers: prev.wrongAnswers + 1,
+          }
+    );
+
+    if (activeQuestion !== questions.length - 1) {
+      setActiveQuestion((prev) => prev + 1);
+    } else {
+      setActiveQuestion(0);
+      setShowResult(true);
+    }
+    setChecked(false);
   };
 
   return (
@@ -56,10 +80,17 @@ const page = () => {
                 <span>{answer}</span>
               </li>
             ))}
+            <button
+              disabled={!checked}
+              onClick={nextQuestion}
+              className={!checked ? 'btn-disabled' : 'btn'}
+            >
+              {activeQuestion === questions.length ? 'Finish' : 'Next'}
+            </button>
           </div>
         ) : (
           <div className='quiz-container'></div>
-        )}{' '}
+        )}
       </div>
     </div>
   );
